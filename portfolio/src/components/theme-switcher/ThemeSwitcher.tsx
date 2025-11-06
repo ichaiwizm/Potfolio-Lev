@@ -17,7 +17,7 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <div ref={containerRef} className="fixed right-4 top-4 z-50">
+    <div ref={containerRef} className="relative">
       <ThemeSwitcherButton onClick={() => setIsOpen((v) => !v)} isOpen={isOpen} />
       {isOpen && (
         <ThemeMenu themes={themes} activeThemeId={themeId} onSelectTheme={handleSelectTheme} />

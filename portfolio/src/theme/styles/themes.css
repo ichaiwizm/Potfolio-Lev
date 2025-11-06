@@ -25,3 +25,60 @@
   --sidebar-ring: var(--ring);
 }
 
+/* Styles personnalisés pour les barres de défilement */
+.theme-lumiere *,
+.theme-nuit *,
+.theme-foret-emeraude *,
+.theme-ocean-profond *,
+.theme-crepuscule-dore *,
+.theme-lavande-zen *,
+.theme-feu-dragon * {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--background);
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+.theme-lumiere *::-webkit-scrollbar,
+.theme-nuit *::-webkit-scrollbar,
+.theme-foret-emeraude *::-webkit-scrollbar,
+.theme-ocean-profond *::-webkit-scrollbar,
+.theme-crepuscule-dore *::-webkit-scrollbar,
+.theme-lavande-zen *::-webkit-scrollbar,
+.theme-feu-dragon *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.theme-lumiere *::-webkit-scrollbar-track,
+.theme-nuit *::-webkit-scrollbar-track,
+.theme-foret-emeraude *::-webkit-scrollbar-track,
+.theme-ocean-profond *::-webkit-scrollbar-track,
+.theme-crepuscule-dore *::-webkit-scrollbar-track,
+.theme-lavande-zen *::-webkit-scrollbar-track,
+.theme-feu-dragon *::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+.theme-lumiere *::-webkit-scrollbar-thumb,
+.theme-nuit *::-webkit-scrollbar-thumb,
+.theme-foret-emeraude *::-webkit-scrollbar-thumb,
+.theme-ocean-profond *::-webkit-scrollbar-thumb,
+.theme-crepuscule-dore *::-webkit-scrollbar-thumb,
+.theme-lavande-zen *::-webkit-scrollbar-thumb,
+.theme-feu-dragon *::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 5px;
+  border: 2px solid var(--background);
+}
+
+.theme-lumiere *::-webkit-scrollbar-thumb:hover,
+.theme-nuit *::-webkit-scrollbar-thumb:hover,
+.theme-foret-emeraude *::-webkit-scrollbar-thumb:hover,
+.theme-ocean-profond *::-webkit-scrollbar-thumb:hover,
+.theme-crepuscule-dore *::-webkit-scrollbar-thumb:hover,
+.theme-lavande-zen *::-webkit-scrollbar-thumb:hover,
+.theme-feu-dragon *::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
