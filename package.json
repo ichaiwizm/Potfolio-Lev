@@ -1,0 +1,17 @@
+{
+  "name": "potfolio-lev-root",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "portfolio",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c cyan,magenta \"npm run -w server start\" \"npm run -w portfolio dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
+
+
