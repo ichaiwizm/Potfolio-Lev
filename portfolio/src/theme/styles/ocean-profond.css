@@ -1,0 +1,44 @@
+/* Thème Océan Profond - Calme et profondeur */
+.theme-ocean-profond {
+  /* Fond bleu océan très clair */
+  --background: oklch(0.97 0.02 220);
+  --foreground: oklch(0.2 0.04 230);
+  
+  /* Cartes blanc bleuté */
+  --card: oklch(0.99 0.01 220);
+  --card-foreground: oklch(0.2 0.04 230);
+  --popover: oklch(0.99 0.01 220);
+  --popover-foreground: oklch(0.2 0.04 230);
+  
+  /* Primary bleu océan profond */
+  --primary: oklch(0.48 0.14 230);
+  --primary-foreground: oklch(0.98 0.01 220);
+  
+  /* Secondary bleu-gris doux */
+  --secondary: oklch(0.92 0.03 220);
+  --secondary-foreground: oklch(0.25 0.04 230);
+  
+  /* Muted gris-bleu très clair */
+  --muted: oklch(0.94 0.02 220);
+  --muted-foreground: oklch(0.48 0.05 230);
+  
+  /* Accent turquoise apaisant */
+  --accent: oklch(0.75 0.12 200);
+  --accent-foreground: oklch(0.2 0.04 230);
+  
+  /* Destructive corail */
+  --destructive: oklch(0.62 0.2 30);
+  
+  /* Bordures bleu très pâle */
+  --border: oklch(0.9 0.02 220);
+  --input: oklch(0.9 0.02 220);
+  --ring: oklch(0.52 0.12 230);
+  
+  /* Charts aquatiques */
+  --chart-1: oklch(0.5 0.14 230);
+  --chart-2: oklch(0.58 0.13 210);
+  --chart-3: oklch(0.65 0.12 195);
+  --chart-4: oklch(0.55 0.11 245);
+  --chart-5: oklch(0.62 0.1 180);
+}
+

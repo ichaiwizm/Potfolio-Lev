@@ -1,0 +1,44 @@
+/* Thème Forêt Émeraude - Nature et sérénité */
+.theme-foret-emeraude {
+  /* Fond vert forêt profond */
+  --background: oklch(0.18 0.05 155);
+  --foreground: oklch(0.96 0.02 155);
+  
+  /* Cartes vert sapin */
+  --card: oklch(0.22 0.05 155);
+  --card-foreground: oklch(0.96 0.02 155);
+  --popover: oklch(0.22 0.05 155);
+  --popover-foreground: oklch(0.96 0.02 155);
+  
+  /* Primary émeraude lumineux */
+  --primary: oklch(0.68 0.16 165);
+  --primary-foreground: oklch(0.14 0.04 155);
+  
+  /* Secondary vert mousse */
+  --secondary: oklch(0.28 0.06 150);
+  --secondary-foreground: oklch(0.94 0.02 155);
+  
+  /* Muted vert-gris */
+  --muted: oklch(0.25 0.04 155);
+  --muted-foreground: oklch(0.72 0.04 155);
+  
+  /* Accent vert menthe */
+  --accent: oklch(0.62 0.14 145);
+  --accent-foreground: oklch(0.14 0.04 155);
+  
+  /* Destructive orange terre */
+  --destructive: oklch(0.6 0.2 40);
+  
+  /* Bordures vert foncé */
+  --border: oklch(0.3 0.03 155);
+  --input: oklch(0.3 0.03 155);
+  --ring: oklch(0.66 0.14 165);
+  
+  /* Charts naturels */
+  --chart-1: oklch(0.68 0.16 165);
+  --chart-2: oklch(0.62 0.14 145);
+  --chart-3: oklch(0.58 0.12 135);
+  --chart-4: oklch(0.64 0.13 175);
+  --chart-5: oklch(0.7 0.15 120);
+}
+

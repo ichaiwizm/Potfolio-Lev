@@ -1,0 +1,44 @@
+/* Thème Lumière - Clarté et simplicité minimaliste */
+.theme-lumiere {
+  /* Fond blanc pur avec texte gris anthracite */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0 0);
+  
+  /* Cartes et popovers légèrement off-white */
+  --card: oklch(0.99 0 0);
+  --card-foreground: oklch(0.2 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.2 0 0);
+  
+  /* Primary bleu cobalt profond et élégant */
+  --primary: oklch(0.45 0.15 250);
+  --primary-foreground: oklch(0.99 0 0);
+  
+  /* Secondary gris bleuté doux */
+  --secondary: oklch(0.96 0.01 250);
+  --secondary-foreground: oklch(0.25 0.02 250);
+  
+  /* Muted gris très clair */
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  
+  /* Accent bleu ciel subtil */
+  --accent: oklch(0.94 0.03 240);
+  --accent-foreground: oklch(0.25 0.02 250);
+  
+  /* Destructive rouge moderne */
+  --destructive: oklch(0.58 0.22 25);
+  
+  /* Bordures et inputs gris très clair */
+  --border: oklch(0.93 0 0);
+  --input: oklch(0.93 0 0);
+  --ring: oklch(0.5 0.12 250);
+  
+  /* Charts harmonieux */
+  --chart-1: oklch(0.5 0.15 250);
+  --chart-2: oklch(0.55 0.14 210);
+  --chart-3: oklch(0.6 0.12 180);
+  --chart-4: oklch(0.52 0.13 280);
+  --chart-5: oklch(0.58 0.11 150);
+}
+

@@ -1,0 +1,44 @@
+/* Thème Nuit Étoilée - Élégance nocturne sophistiquée */
+.theme-nuit {
+  /* Fond bleu nuit profond */
+  --background: oklch(0.15 0.03 250);
+  --foreground: oklch(0.97 0.01 250);
+  
+  /* Cartes bleu nuit plus clair */
+  --card: oklch(0.19 0.03 250);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.19 0.03 250);
+  --popover-foreground: oklch(0.97 0.01 250);
+  
+  /* Primary bleu électrique lumineux */
+  --primary: oklch(0.7 0.18 260);
+  --primary-foreground: oklch(0.15 0.03 250);
+  
+  /* Secondary bleu-gris foncé */
+  --secondary: oklch(0.25 0.03 250);
+  --secondary-foreground: oklch(0.95 0.01 250);
+  
+  /* Muted gris-bleu moyen */
+  --muted: oklch(0.23 0.02 250);
+  --muted-foreground: oklch(0.7 0.02 250);
+  
+  /* Accent cyan lumineux */
+  --accent: oklch(0.65 0.15 220);
+  --accent-foreground: oklch(0.15 0.03 250);
+  
+  /* Destructive rouge orangé */
+  --destructive: oklch(0.62 0.24 30);
+  
+  /* Bordures subtiles */
+  --border: oklch(0.28 0.02 250);
+  --input: oklch(0.28 0.02 250);
+  --ring: oklch(0.68 0.16 260);
+  
+  /* Charts vibrants */
+  --chart-1: oklch(0.7 0.18 260);
+  --chart-2: oklch(0.65 0.15 220);
+  --chart-3: oklch(0.68 0.16 190);
+  --chart-4: oklch(0.72 0.17 280);
+  --chart-5: oklch(0.66 0.14 310);
+}
+

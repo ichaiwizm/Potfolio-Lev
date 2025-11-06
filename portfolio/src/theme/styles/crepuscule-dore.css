@@ -1,0 +1,44 @@
+/* Thème Crépuscule Doré - Chaleur et harmonie */
+.theme-crepuscule-dore {
+  /* Fond beige rosé chaud */
+  --background: oklch(0.96 0.02 50);
+  --foreground: oklch(0.22 0.03 30);
+  
+  /* Cartes crème doré */
+  --card: oklch(0.98 0.02 45);
+  --card-foreground: oklch(0.22 0.03 30);
+  --popover: oklch(0.98 0.02 45);
+  --popover-foreground: oklch(0.22 0.03 30);
+  
+  /* Primary orange brûlé élégant */
+  --primary: oklch(0.55 0.14 40);
+  --primary-foreground: oklch(0.98 0.01 45);
+  
+  /* Secondary pêche doux */
+  --secondary: oklch(0.92 0.04 50);
+  --secondary-foreground: oklch(0.25 0.03 30);
+  
+  /* Muted sable clair */
+  --muted: oklch(0.94 0.02 50);
+  --muted-foreground: oklch(0.5 0.03 40);
+  
+  /* Accent terracotta */
+  --accent: oklch(0.68 0.12 35);
+  --accent-foreground: oklch(0.98 0.01 45);
+  
+  /* Destructive rouge brique */
+  --destructive: oklch(0.58 0.18 25);
+  
+  /* Bordures beige moyen */
+  --border: oklch(0.88 0.02 50);
+  --input: oklch(0.88 0.02 50);
+  --ring: oklch(0.58 0.12 40);
+  
+  /* Charts chaleureux */
+  --chart-1: oklch(0.58 0.14 40);
+  --chart-2: oklch(0.65 0.12 55);
+  --chart-3: oklch(0.62 0.1 70);
+  --chart-4: oklch(0.6 0.11 25);
+  --chart-5: oklch(0.68 0.13 15);
+}
+

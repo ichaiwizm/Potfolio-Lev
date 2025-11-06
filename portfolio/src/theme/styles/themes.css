@@ -1,0 +1,27 @@
+/* Import de tous les thèmes */
+@import "./lumiere.css";
+@import "./nuit.css";
+@import "./foret-emeraude.css";
+@import "./ocean-profond.css";
+@import "./crepuscule-dore.css";
+@import "./lavande-zen.css";
+@import "./feu-dragon.css";
+
+/* Ajout des variables sidebar pour tous les thèmes */
+.theme-lumiere,
+.theme-nuit,
+.theme-foret-emeraude,
+.theme-ocean-profond,
+.theme-crepuscule-dore,
+.theme-lavande-zen,
+.theme-feu-dragon {
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--card-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+

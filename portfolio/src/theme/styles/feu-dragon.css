@@ -1,0 +1,44 @@
+/* Thème Feu de Dragon - Puissance et intensité */
+.theme-feu-dragon {
+  /* Fond noir rougeâtre */
+  --background: oklch(0.14 0.04 30);
+  --foreground: oklch(0.98 0.02 30);
+  
+  /* Cartes gris anthracite chaud */
+  --card: oklch(0.18 0.04 30);
+  --card-foreground: oklch(0.98 0.02 30);
+  --popover: oklch(0.18 0.04 30);
+  --popover-foreground: oklch(0.98 0.02 30);
+  
+  /* Primary rouge feu intense */
+  --primary: oklch(0.62 0.26 30);
+  --primary-foreground: oklch(0.98 0.01 30);
+  
+  /* Secondary gris-rouge foncé */
+  --secondary: oklch(0.24 0.05 25);
+  --secondary-foreground: oklch(0.96 0.02 30);
+  
+  /* Muted gris chaud */
+  --muted: oklch(0.22 0.03 30);
+  --muted-foreground: oklch(0.7 0.04 30);
+  
+  /* Accent orange brûlant */
+  --accent: oklch(0.68 0.22 45);
+  --accent-foreground: oklch(0.14 0.04 30);
+  
+  /* Destructive rouge sang */
+  --destructive: oklch(0.58 0.28 20);
+  
+  /* Bordures rouge sombre */
+  --border: oklch(0.26 0.04 30);
+  --input: oklch(0.26 0.04 30);
+  --ring: oklch(0.64 0.24 30);
+  
+  /* Charts enflammés */
+  --chart-1: oklch(0.64 0.26 30);
+  --chart-2: oklch(0.68 0.22 45);
+  --chart-3: oklch(0.62 0.2 60);
+  --chart-4: oklch(0.6 0.24 15);
+  --chart-5: oklch(0.66 0.2 350);
+}
+
