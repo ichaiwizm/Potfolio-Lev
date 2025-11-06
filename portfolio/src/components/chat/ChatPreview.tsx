@@ -1,6 +1,4 @@
 import { useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp } from "lucide-react"
 
 type ChatMessage = { role: "user" | "assistant"; content: string }
 
@@ -31,17 +29,6 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
   return (
     <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-xl px-4">
       <div className="relative rounded-xl border bg-background/40 p-2 shadow-none backdrop-blur-sm text-xs text-foreground/70">
-        <div className="flex items-center justify-end mb-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-6 w-6 p-0 rounded-full text-foreground/60 hover:text-foreground/70 hover:bg-transparent"
-            aria-label={expanded ? "Réduire" : "Déplier"}
-            onClick={onToggle}
-          >
-            {expanded ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
-          </Button>
-        </div>
         <div className={expanded ? "max-h-36 overflow-y-auto pr-2" : "max-h-16 overflow-y-auto pr-2"} aria-live="polite">
           <div className="flex flex-col gap-1.5 leading-snug">
             {messages.length === 0 && (
@@ -67,6 +54,16 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
             <div ref={endRef} />
           </div>
         </div>
+      </div>
+      <div className="mt-1 flex justify-end px-1">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="text-[11px] text-foreground/50 hover:text-foreground/70 underline-offset-2 hover:underline cursor-pointer"
+          aria-label={expanded ? "Réduire" : "Afficher plus"}
+        >
+          {expanded ? "Réduire" : "Afficher plus"}
+        </button>
       </div>
     </div>
   )
