@@ -20,6 +20,7 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
   const [pos, setPos] = useState<Pos>(initialPos);
   const [dragOffset, setDragOffset] = useState<Pos | null>(null);
   const posRef = useRef<Pos>(pos);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => { posRef.current = pos; }, [pos]);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
     return () => { window.removeEventListener("pointermove", onMoveDoc); };
   }, [dragOffset, id, onMove]);
 
+
   const startDrag = (e: React.PointerEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -39,6 +41,7 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
 
   return (
     <div
+      ref={rootRef}
       onMouseDown={() => onFocus(id)}
       style={{ position: "fixed", left: pos.x, top: pos.y, width, height, zIndex }}
       className="rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-gradient-to-br from-card via-card to-card/95 text-card-foreground overflow-hidden border border-primary/20 backdrop-blur-xl ring-1 ring-white/10"
