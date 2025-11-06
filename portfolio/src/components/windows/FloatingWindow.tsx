@@ -51,38 +51,34 @@ export function FloatingWindow({ id, title, zIndex, initialPos, width = 480, hei
         onPointerDown={startDrag}
       >
         <div className="flex items-center gap-2.5 flex-1 min-w-0">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm" />
-            <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors shadow-sm" />
+          <div className="flex gap-2 group/buttons" onPointerDown={(e) => e.stopPropagation()}>
+            <button
+              aria-label="Close"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClose(id); }}
+              onPointerDown={(e) => e.stopPropagation()}
+              style={{ width: '12px', height: '12px', minWidth: '12px', minHeight: '12px' }}
+              className="p-0 border-0 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors shadow-sm cursor-pointer relative"
+              title="Fermer"
+            >
+              <svg style={{ width: '7px', height: '7px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} className="text-red-900/80 opacity-0 group-hover/buttons:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <button
+              aria-label="Minimize"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMinimize(id); }}
+              onPointerDown={(e) => e.stopPropagation()}
+              style={{ width: '12px', height: '12px', minWidth: '12px', minHeight: '12px' }}
+              className="p-0 border-0 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors shadow-sm cursor-pointer relative"
+              title="Réduire"
+            >
+              <svg style={{ width: '7px', height: '7px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} className="text-yellow-900/80 opacity-0 group-hover/buttons:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
+              </svg>
+            </button>
+            <div style={{ width: '12px', height: '12px', minWidth: '12px', minHeight: '12px' }} className="rounded-full bg-green-500/80 hover:bg-green-500 transition-colors shadow-sm flex-shrink-0" title="Agrandir (décoratif)" />
           </div>
           <span className="text-sm font-semibold truncate text-foreground/90 tracking-tight">{title}</span>
-        </div>
-        <div className="flex gap-1 ml-3" onPointerDown={(e) => e.stopPropagation()}>
-          <button 
-            aria-label="Minimize" 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMinimize(id); }}
-            onPointerDown={(e) => e.stopPropagation()}
-            className="h-8 w-8 rounded-lg hover:bg-primary/25 active:bg-primary/30 transition-all flex items-center justify-center group relative overflow-hidden"
-            title="Réduire"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <svg className="w-4 h-4 text-foreground/70 group-hover:text-primary relative z-10 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <button 
-            aria-label="Close" 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClose(id); }}
-            onPointerDown={(e) => e.stopPropagation()}
-            className="h-8 w-8 rounded-lg hover:bg-red-500/90 active:bg-red-600 transition-all flex items-center justify-center group relative overflow-hidden"
-            title="Fermer"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-red-400/0 to-red-600/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <svg className="w-4 h-4 text-foreground/70 group-hover:text-white relative z-10 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
         </div>
       </div>
       <div ref={contentRef} style={{ height: "calc(100% - 56px)" }} className="overflow-auto p-5 bg-gradient-to-br from-background/30 to-background/10" />
