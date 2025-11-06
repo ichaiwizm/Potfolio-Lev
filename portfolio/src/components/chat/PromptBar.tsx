@@ -20,8 +20,8 @@ export function PromptBar({ onSubmit, loading }: PromptBarProps) {
   }
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4">
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-full border bg-background px-2 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-ring">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xl px-4">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-full border bg-background/80 px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-ring/40">
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}

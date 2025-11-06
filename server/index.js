@@ -23,11 +23,27 @@ app.use((req, res, next) => {
 app.post("/api/chat", async (req, res) => {
   try {
     const userMessage = String(req.body?.message || "").trim()
-    if (!userMessage) return res.status(400).json({ error: "Message requis" })
+    const bodyMessages = Array.isArray(req.body?.messages) ? req.body.messages : null
+    if (!userMessage && !(bodyMessages && bodyMessages.length)) {
+      return res.status(400).json({ error: "Message requis" })
+    }
 
     const model = process.env.OPENROUTER_MODEL || "anthropic/claude-haiku-4.5"
-    const userSnippet = userMessage.slice(0, 160).replace(/\n/g, " ")
-    console.log(`→ OpenRouter request | model=${model} | user=\"${userSnippet}${userMessage.length>160?"…":""}\"`)
+    const userSnippet = (userMessage || "").slice(0, 160).replace(/\n/g, " ")
+    const histCount = bodyMessages ? bodyMessages.length : 0
+    console.log(`→ OpenRouter request | model=${model} | history=${histCount} | user=\"${userSnippet}${(userMessage||"").length>160?"…":""}\"`)
+    const messagesPayload = [
+      { role: "system", content: "Tu es un assistant utile et concis." },
+    ]
+    if (bodyMessages && histCount) {
+      for (const m of bodyMessages) {
+        if (m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string") {
+          messagesPayload.push({ role: m.role, content: m.content })
+        }
+      }
+    } else if (userMessage) {
+      messagesPayload.push({ role: "user", content: userMessage })
+    }
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -36,13 +52,7 @@ app.post("/api/chat", async (req, res) => {
         "HTTP-Referer": process.env.APP_URL || "http://localhost:5173",
         "X-Title": process.env.APP_NAME || "Portfolio Chat",
       },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: "Tu es un assistant utile et concis." },
-          { role: "user", content: userMessage },
-        ],
-      }),
+      body: JSON.stringify({ model, messages: messagesPayload }),
     })
 
     if (!response.ok) {
