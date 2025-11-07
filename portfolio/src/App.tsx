@@ -6,6 +6,7 @@ import { sendChat } from "@/lib/api";
 import type { ChatMessage } from "@/lib/api";
 import WindowManager, { type WindowManagerHandle } from "@/components/windows/WindowManager";
 import { Button } from "@/components/ui/button";
+import { parseWindowCommands } from "@/lib/windowParser";
 
 function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -19,7 +20,15 @@ function App() {
       const next: ChatMessage[] = [...messages, { role: "user", content: message }];
       setMessages(next);
       const content = await sendChat(next);
-      setMessages((prev) => [...prev, { role: "assistant", content: content || "" }]);
+
+      // Parse window commands from LLM response
+      const { displayContent, windows } = parseWindowCommands(content || "");
+
+      // Create windows automatically
+      windows.forEach(w => wmRef.current?.createWindow(w));
+
+      // Display cleaned content
+      setMessages((prev) => [...prev, { role: "assistant", content: displayContent }]);
     } catch (e) {
       setMessages((prev) => [...prev, { role: "assistant", content: "(Erreur lors de la requête)" }]);
     } finally {

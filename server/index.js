@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const fetch = global.fetch || require("node-fetch")
+const systemPrompt = require("./systemPrompt")
 require("dotenv").config()
 
 const app = express()
@@ -32,8 +33,9 @@ app.post("/api/chat", async (req, res) => {
     const userSnippet = (userMessage || "").slice(0, 160).replace(/\n/g, " ")
     const histCount = bodyMessages ? bodyMessages.length : 0
     console.log(`→ OpenRouter request | model=${model} | history=${histCount} | user=\"${userSnippet}${(userMessage||"").length>160?"…":""}\"`)
+
     const messagesPayload = [
-      { role: "system", content: "Tu es un assistant utile et concis." },
+      { role: "system", content: systemPrompt },
     ]
     if (bodyMessages && histCount) {
       for (const m of bodyMessages) {
