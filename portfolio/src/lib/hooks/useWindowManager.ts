@@ -18,6 +18,10 @@ export function useWindowManager() {
     wmRef.current?.modifyWindow(key, html);
   }
 
+  function resizeWindow(key: string, width?: number, height?: number) {
+    wmRef.current?.resizeWindow(key, width, height);
+  }
+
   function resetAll() {
     wmRef.current?.resetAll();
     setWindowCount(0);
@@ -29,6 +33,7 @@ export function useWindowManager() {
     createWindow,
     closeWindow,
     modifyWindow,
+    resizeWindow,
     resetAll
   };
 }

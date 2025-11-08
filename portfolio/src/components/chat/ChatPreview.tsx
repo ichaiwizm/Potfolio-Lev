@@ -7,6 +7,7 @@ type ChatPreviewProps = {
   messages: ChatMessage[]
   expanded: boolean
   onToggle: () => void
+  loading?: boolean
 }
 
 function formatContent(input: string): string {
@@ -34,7 +35,7 @@ function formatContent(input: string): string {
   }
 }
 
-export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) {
+export function ChatPreview({ messages, expanded, onToggle, loading }: ChatPreviewProps) {
   const endRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -43,8 +44,8 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
 
   return (
     <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-xl px-4">
-      <div className="relative rounded-xl border bg-background/40 p-2 shadow-none backdrop-blur-sm text-xs text-foreground/70">
-        <div className={expanded ? "max-h-36 overflow-y-auto pr-2" : "max-h-16 overflow-y-auto pr-2"} aria-live="polite">
+      <div className="relative rounded-xl border bg-background/50 p-2 shadow-sm backdrop-blur-sm text-sm text-foreground/80">
+        <div className={expanded ? "max-h-48 overflow-y-auto pr-2" : "max-h-20 overflow-y-auto pr-2"} aria-live="polite">
           <div className="flex flex-col gap-1.5 leading-snug">
             {messages.length === 0 && (
               <p className="italic text-foreground/60">Salut, comment puis-je vous aider ?</p>
@@ -56,9 +57,9 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
                   <p
                     className={
                       (isUser
-                        ? "italic font-light text-foreground/60"
-                        : "not-italic font-serif text-foreground/70") +
-                      " max-w-[80%] whitespace-pre-wrap"
+                        ? "border-l-2 border-primary/60 text-foreground"
+                        : "border-l-2 border-foreground/20 text-foreground/80") +
+                      " max-w-[85%] whitespace-pre-wrap pl-3"
                     }
                   >
                     {formatContent(m.content)}
@@ -66,15 +67,29 @@ export function ChatPreview({ messages, expanded, onToggle }: ChatPreviewProps) 
                 </div>
               )
             })}
+
+            {loading && (
+              <div className="flex justify-start">
+                <div className="border-l-2 border-foreground/20 pl-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.3s]" />
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.15s]" />
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/50 animate-bounce" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div ref={endRef} />
           </div>
         </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-background/70 via-background/30 to-transparent" />
       </div>
       <div className="mt-1 flex justify-end px-1">
         <button
           type="button"
           onClick={onToggle}
-          className="text-[11px] text-foreground/50 hover:text-foreground/70 underline-offset-2 hover:underline cursor-pointer"
+          className="text-[11px] text-foreground/60 hover:text-foreground/80 underline-offset-2 hover:underline cursor-pointer"
           aria-label={expanded ? "Réduire" : "Afficher plus"}
         >
           {expanded ? "Réduire" : "Afficher plus"}

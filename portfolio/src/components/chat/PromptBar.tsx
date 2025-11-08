@@ -16,12 +16,9 @@ export function PromptBar({ onSubmit, loading }: PromptBarProps) {
     const trimmed = value.trim()
     if (!trimmed || loading) return
 
-    try {
-      await onSubmit(trimmed)
-    } finally {
-      // Always clear the input, even if onSubmit throws
-      setValue("")
-    }
+    // Vider le champ immédiatement après l'envoi
+    setValue("")
+    await onSubmit(trimmed)
   }
 
   return (

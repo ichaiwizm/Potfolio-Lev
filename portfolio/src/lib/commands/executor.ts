@@ -7,6 +7,10 @@ export function executeCommand(cmd: Command, ctx: ExecutorContext): void {
       case "create_window":
         ctx.createWindow(cmd.window);
         break;
+      case "resize_window":
+        ctx.resizeWindow(cmd.key, cmd.width, cmd.height);
+        toast.success("Fenêtre redimensionnée");
+        break;
       case "change_theme":
         ctx.changeTheme(cmd.theme);
         toast.success(`Thème changé: ${cmd.theme}`);

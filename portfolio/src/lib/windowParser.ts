@@ -29,6 +29,8 @@ function getCommandDisplayText(cmd: Command): string {
   switch (cmd.type) {
     case "create_window":
       return `✨ Fenêtre créée: "${cmd.window.title}"`;
+    case "resize_window":
+      return `📐 Fenêtre redimensionnée: ${cmd.key}`;
     case "change_theme":
       return `🎨 Thème changé: ${cmd.theme}`;
     case "change_background":

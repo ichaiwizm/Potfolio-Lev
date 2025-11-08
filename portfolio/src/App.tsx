@@ -15,7 +15,7 @@ function App() {
   const [expanded, setExpanded] = useState(false);
   const { setThemeId } = useTheme();
 
-  const { wmRef, windowCount, createWindow, closeWindow, modifyWindow, resetAll } =
+  const { wmRef, windowCount, createWindow, closeWindow, modifyWindow, resizeWindow, resetAll } =
     useWindowManager();
   const { setBackground, clearBackground } = useAppBackground();
 
@@ -23,6 +23,7 @@ function App() {
     createWindow,
     closeWindow,
     modifyWindow,
+    resizeWindow,
     changeTheme: (theme: string) => {
       if (VALID_THEME_IDS.includes(theme as any)) {
         setThemeId(theme as any);
@@ -52,6 +53,7 @@ function App() {
         messages={messages}
         expanded={expanded}
         onToggle={() => setExpanded((v) => !v)}
+        loading={loading}
       />
       <PromptBar onSubmit={handleSubmit} loading={loading} />
       <WindowManager ref={wmRef} />

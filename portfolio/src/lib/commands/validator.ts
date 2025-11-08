@@ -40,6 +40,19 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     return { valid: false, error: "HTML manquant" };
   }
 
+  if (t === "resize_window") {
+    if (!cmd.key) return { valid: false, error: "Clé manquante" };
+    if (cmd.width === undefined && cmd.height === undefined) {
+      return { valid: false, error: "Aucune dimension fournie" };
+    }
+    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < 100 || cmd.width > 2000)) {
+      return { valid: false, error: "Largeur invalide (100-2000px)" };
+    }
+    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < 100 || cmd.height > 1500)) {
+      return { valid: false, error: "Hauteur invalide (100-1500px)" };
+    }
+  }
+
   if (t === "set_ui" && cmd.chatExpanded !== undefined && typeof cmd.chatExpanded !== "boolean") {
     return { valid: false, error: "chatExpanded invalide" };
   }

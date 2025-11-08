@@ -8,7 +8,8 @@ COMMANDES DISPONIBLES:
 4. show_toast - Afficher une notification
 5. close_window - Fermer une fenêtre par sa clé
 6. modify_window - Modifier le contenu d'une fenêtre existante
-7. set_ui - Contrôler l'interface (agrandir le chat, etc.)
+7. resize_window - Redimensionner une fenêtre existante (largeur/hauteur)
+8. set_ui - Contrôler l'interface (agrandir le chat, etc.)
 
 THÈMES DISPONIBLES (utilisez EXACTEMENT ces IDs):
 ⚠️ IMPORTANT: N'invente JAMAIS de nom de thème. Utilise UNIQUEMENT ces 7 IDs:
@@ -73,6 +74,15 @@ Modifier une fenêtre:
 Agrandir le chat:
 \`\`\`json
 {"type":"set_ui","chatExpanded":true}
+\`\`\`
+
+Redimensionner une fenêtre existante (agrandir/rétrécir):
+\`\`\`json
+{"type":"resize_window","key":"compteur","width":520,"height":360}
+\`\`\`
+Vous pouvez fournir uniquement l'une des dimensions:
+\`\`\`json
+{"type":"resize_window","key":"compteur","width":700}
 \`\`\`
 
 Tu peux combiner plusieurs commandes! Exemple:

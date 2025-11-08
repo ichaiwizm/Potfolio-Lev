@@ -7,12 +7,14 @@ export type Command =
   | { type: "show_toast"; message: string; variant?: "success" | "error" | "info" }
   | { type: "close_window"; key: string }
   | { type: "modify_window"; key: string; contentHtml: string }
+  | { type: "resize_window"; key: string; width?: number; height?: number }
   | { type: "set_ui"; chatExpanded?: boolean };
 
 export type ExecutorContext = {
   createWindow: (spec: WindowSpec) => void;
   closeWindow: (key: string) => void;
   modifyWindow: (key: string, contentHtml: string) => void;
+  resizeWindow: (key: string, width?: number, height?: number) => void;
   changeTheme: (theme: string) => void;
   setBackground: (style: string) => void;
   setChatExpanded: (expanded: boolean) => void;
