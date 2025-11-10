@@ -4,16 +4,26 @@ export type Suggestion = {
 };
 
 export const SUGGESTIONS: Suggestion[] = [
-  { text: "Crée une horloge animée", category: "Créatif" },
-  { text: "Génère une palette de couleurs", category: "Créatif" },
-  { text: "Fais un timer pomodoro", category: "Productivité" },
-  { text: "Galerie d'images interactive", category: "Médias" },
-  { text: "Compteur avec animations", category: "Créatif" },
-  { text: "Dégradé animé en arrière-plan", category: "Créatif" },
-  { text: "Jeu Pierre-Papier-Ciseaux", category: "Jeux" },
-  { text: "Particules flottantes", category: "Animations" },
-  { text: "Todo list élégante", category: "Productivité" },
-  { text: "Calculatrice scientifique", category: "Productivité" },
-  { text: "Visualiseur d'ondes sonores", category: "Créatif" },
-  { text: "Diaporama avec transitions", category: "Médias" },
+  // Portfolio - Section principale
+  { text: "Montre-moi tes projets", category: "Portfolio" },
+  { text: "Affiche ton CV", category: "Portfolio" },
+  { text: "Quelles sont tes compétences ?", category: "Portfolio" },
+  { text: "Parle-moi de ton parcours", category: "Portfolio" },
+
+  // Contact
+  { text: "Comment te contacter ?", category: "Contact" },
+  { text: "Formulaire de contact", category: "Contact" },
+
+  // Expérience
+  { text: "Ton expérience chez BCDemarches", category: "Expérience" },
+  { text: "Raconte ton projet humanitaire", category: "Expérience" },
+
+  // Compétences techniques
+  { text: "Démonstration React", category: "Démo" },
+  { text: "Visualise tes compétences", category: "Démo" },
+  { text: "Timeline de formation", category: "Démo" },
+
+  // Personnalisation
+  { text: "Change le thème en mode sombre", category: "Personnalisation" },
+  { text: "Fond dégradé violet", category: "Personnalisation" },
 ];

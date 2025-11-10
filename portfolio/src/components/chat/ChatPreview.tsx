@@ -48,7 +48,10 @@ export function ChatPreview({ messages, expanded, onToggle, loading }: ChatPrevi
         <div className={expanded ? "max-h-48 overflow-y-auto pr-2" : "max-h-20 overflow-y-auto pr-2"} aria-live="polite">
           <div className="flex flex-col gap-1.5 leading-snug">
             {messages.length === 0 && (
-              <p className="italic text-foreground/60">Salut, comment puis-je vous aider ?</p>
+              <p className="italic text-foreground/60">
+                Bonjour ! Je suis Levana, développeuse full-stack.
+                Posez-moi des questions sur mes projets, compétences ou expérience ! 👋
+              </p>
             )}
             {messages.map((m, i) => {
               const isUser = m.role === "user"

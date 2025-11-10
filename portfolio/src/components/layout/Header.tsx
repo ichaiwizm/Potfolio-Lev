@@ -12,10 +12,13 @@ export function Header({ onReset }: HeaderProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Nom */}
-          <div className="flex items-center">
+          <div className="flex flex-col">
             <a href="#" className="text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity">
-              Lev
+              Levana Wizman
             </a>
+            <span className="text-xs text-foreground/60 tracking-wide">
+              Développeuse Full-Stack
+            </span>
           </div>
 
           {/* Navigation */}
@@ -73,4 +76,3 @@ export function Header({ onReset }: HeaderProps) {
     </header>
   );
 }
-

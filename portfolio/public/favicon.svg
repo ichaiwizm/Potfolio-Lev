@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="30" fill="#8b5cf6"/>
+
+  <!-- Letter L -->
+  <path d="M 20 18 L 20 46 L 38 46 L 38 42 L 24 42 L 24 18 Z" fill="white"/>
+
+  <!-- Accent dot/spark -->
+  <circle cx="42" cy="22" r="3" fill="#a78bfa"/>
+</svg>
