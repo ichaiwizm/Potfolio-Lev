@@ -1,7 +1,15 @@
 const express = require("express")
 const cors = require("cors")
+const fs = require("fs")
+const path = require("path")
 const fetch = global.fetch || require("node-fetch")
 require("dotenv").config()
+
+// Load system prompt from external file
+const systemPrompt = fs.readFileSync(
+  path.join(__dirname, "prompts", "system-prompt.md"),
+  "utf-8"
+)
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -32,8 +40,9 @@ app.post("/api/chat", async (req, res) => {
     const userSnippet = (userMessage || "").slice(0, 160).replace(/\n/g, " ")
     const histCount = bodyMessages ? bodyMessages.length : 0
     console.log(`→ OpenRouter request | model=${model} | history=${histCount} | user=\"${userSnippet}${(userMessage||"").length>160?"…":""}\"`)
+
     const messagesPayload = [
-      { role: "system", content: "Tu es un assistant utile et concis." },
+      { role: "system", content: systemPrompt },
     ]
     if (bodyMessages && histCount) {
       for (const m of bodyMessages) {

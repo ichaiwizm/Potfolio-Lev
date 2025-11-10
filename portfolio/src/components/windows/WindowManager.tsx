@@ -1,9 +1,15 @@
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from "react";
 import FloatingWindow from "@/components/windows/FloatingWindow";
-import { Button } from "@/components/ui/button";
+import { WindowDock } from "@/components/windows/WindowDock";
 
 export type WindowSpec = { title: string; contentHtml: string; width?: number; height?: number; key?: string };
-export type WindowManagerHandle = { createWindow: (spec: WindowSpec) => void };
+export type WindowManagerHandle = {
+  createWindow: (spec: WindowSpec) => void;
+  closeWindow: (key: string) => void;
+  modifyWindow: (key: string, contentHtml: string) => void;
+  resizeWindow: (key: string, width?: number, height?: number) => void;
+  resetAll: () => void;
+};
 
 type Item = {
   id: string; title: string; contentHtml: string; width: number; height: number; key?: string;
@@ -14,82 +20,100 @@ const makeId = () => `w_${Date.now().toString(36)}_${Math.random().toString(36).
 
 export const WindowManager = forwardRef<WindowManagerHandle, {}>((_props, ref) => {
   const [items, setItems] = useState<Item[]>([]);
-  const [nextZ, setNextZ] = useState(1000);
-  const [dockCollapsed, setDockCollapsed] = useState(true);
+  const [, setNextZ] = useState(1000);
 
   const bringFront = useCallback((id: string) => {
-    setItems((ws) => {
-      const z = nextZ + 1; setNextZ(z);
-      return ws.map(w => w.id === id ? { ...w, z } : w);
+    // Use functional updates to avoid stale closure issues
+    setNextZ(z => {
+      const newZ = z + 1;
+      setItems((ws) => ws.map(w => w.id === id ? { ...w, z: newZ } : w));
+      return newZ;
     });
-  }, [nextZ]);
+  }, []);
 
   const createWindow = useCallback((spec: WindowSpec) => {
-    // If a key is provided and an item exists with that key, restore/focus it instead of creating a new one
-    if (spec.key) {
-      const existing = items.find(i => i.key === spec.key);
-      if (existing) {
-        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, minimized: false } : i));
-        const z = nextZ + 1; setNextZ(z);
-        setItems(ws => ws.map(i => i.id === existing.id ? { ...i, z } : i));
-        return;
+    // Use functional updates to avoid race conditions
+    setItems(ws => {
+      // Check if a window with this key already exists
+      if (spec.key) {
+        const existing = ws.find(i => i.key === spec.key);
+        if (existing) {
+          // Restore and bring to front
+          setNextZ(z => {
+            const newZ = z + 1;
+            setItems(items => items.map(i =>
+              i.id === existing.id
+                ? { ...i, minimized: false, z: newZ }
+                : i
+            ));
+            return newZ;
+          });
+          // Return current state unchanged (will be updated by setNextZ callback)
+          return ws;
+        }
       }
-    }
-    const id = makeId(); const width = spec.width ?? 480; const height = spec.height ?? 320;
-    const offset = items.filter(i=>!i.minimized).length * 20;
-    const x = 80 + (offset % 200); const y = 80 + (offset % 160);
-    const z = nextZ + 1; setNextZ(z);
-    setItems(ws => [...ws, { id, key: spec.key, title: spec.title, contentHtml: spec.contentHtml, width, height, x, y, z, minimized: false }]);
-  }, [items, nextZ]);
 
-  useImperativeHandle(ref, () => ({ createWindow }), [createWindow]);
+      // Create new window
+      const id = makeId();
+      const width = spec.width ?? 480;
+      const height = spec.height ?? 320;
+      const offset = ws.filter(i => !i.minimized).length * 20;
+      const x = 80 + (offset % 200);
+      const y = 80 + (offset % 160);
+
+      // Update z-index and add window
+      setNextZ(z => z + 1);
+      const newZ = Date.now(); // Use timestamp as temporary z-index
+
+      return [...ws, {
+        id,
+        key: spec.key,
+        title: spec.title,
+        contentHtml: spec.contentHtml,
+        width,
+        height,
+        x,
+        y,
+        z: newZ,
+        minimized: false
+      }];
+    });
+  }, []);
+
+  const closeWindow = useCallback((key: string) => {
+    setItems(ws => ws.filter(i => i.key !== key));
+  }, []);
+
+  const modifyWindow = useCallback((key: string, contentHtml: string) => {
+    setItems(ws => ws.map(i => i.key === key ? { ...i, contentHtml } : i));
+  }, []);
+
+  const resetAll = useCallback(() => {
+    setItems([]);
+    setNextZ(1000);
+  }, []);
+
+  const resizeWindow = useCallback((key: string, width?: number, height?: number) => {
+    setItems(ws => ws.map(i => {
+      if (i.key !== key) return i;
+      const nextWidth = width !== undefined ? Math.max(100, Math.min(2000, width)) : i.width;
+      const nextHeight = height !== undefined ? Math.max(100, Math.min(1500, height)) : i.height;
+      return { ...i, width: nextWidth, height: nextHeight };
+    }));
+  }, []);
+
+  useImperativeHandle(ref, () => ({ createWindow, closeWindow, modifyWindow, resizeWindow, resetAll }), [createWindow, closeWindow, modifyWindow, resizeWindow, resetAll]);
 
   const docked = useMemo(() => items.filter(w=>w.minimized), [items]);
 
+  const handleRestore = useCallback((id: string) => {
+    setItems(ws=>ws.map(i=>i.id===id?{...i,minimized:false}:i));
+    bringFront(id);
+  }, [bringFront]);
+
   return (
     <>
-      {docked.length > 0 && (
-        <div className="fixed top-20 right-4 z-[10000] rounded-xl bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-xl border border-primary/20 shadow-2xl ring-1 ring-white/10 overflow-hidden">
-          <Button
-            variant="ghost"
-            onClick={() => setDockCollapsed(!dockCollapsed)}
-            className="w-full flex items-center justify-between px-3 py-2.5 transition-colors group cursor-pointer rounded-none hover:bg-transparent"
-          >
-            <div className="flex items-center gap-2">
-              <svg className={`w-4 h-4 text-foreground/50 transition-transform ${dockCollapsed ? '' : 'rotate-180'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-              </svg>
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-foreground/50">
-                Fenêtres
-              </span>
-            </div>
-            <div className="px-2 py-0.5 rounded-full bg-primary/20 text-[10px] font-bold text-primary">
-              {docked.length}
-            </div>
-          </Button>
-          {!dockCollapsed && (
-            <div className="flex flex-col gap-2.5 p-3 pt-0">
-              {docked.map(w => (
-                <Button 
-                  key={w.id}
-                  variant="outline"
-                  onClick={() => {
-                    setItems(ws=>ws.map(i=>i.id===w.id?{...i,minimized:false}:i));
-                    bringFront(w.id);
-                  }}
-                  className="px-3.5 py-2.5 text-xs font-medium rounded-lg bg-gradient-to-br from-primary/15 to-primary/5 hover:bg-transparent border border-primary/30 shadow-lg hover:shadow-xl transition-all backdrop-blur-sm flex items-center gap-2.5 group max-w-[220px] hover:scale-105 active:scale-95 cursor-pointer"
-                  title={w.title}
-                >
-                  <svg className="w-4 h-4 text-primary/70 flex-shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                  <span className="truncate text-foreground/80 font-semibold">{w.title}</span>
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      <WindowDock items={docked} onRestore={handleRestore} />
       {items.filter(w=>!w.minimized).map(w => (
         <FloatingWindow key={w.id} id={w.id} title={w.title} zIndex={w.z}
           initialPos={{ x: w.x, y: w.y }} width={w.width} height={w.height} contentHtml={w.contentHtml}

@@ -15,6 +15,10 @@ export function sanitizeThemeId(value: string | null | undefined): ThemeId | nul
 }
 
 export function getDefaultTheme(): ThemeId {
-  return "crepuscule-dore";
+  return "lavande-zen";
+}
+
+export function isValidThemeId(value: string): value is ThemeId {
+  return value in THEME_DEFINITIONS;
 }
 

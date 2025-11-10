@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/c/Users/**)",
+      "Bash(sqlite3:*)",
+      "Bash(tree:*)",
+      "mcp__playwright__browser_navigate",
+      "Bash(cat:*)",
+      "Bash(rm:*)",
+      "Bash(xargs -I {} sh -c 'echo \"\"\"\"=== {} ===\"\"\"\" && grep -l \"\"\"\"from.*{}\"\"\"\" src/renderer/**/*.{ts,tsx} 2>/dev/null | head -5 || echo \"\"\"\"No usage found\"\"\"\"')",
+      "Bash(test:*)",
+      "Bash(npx tsx:*)",
+      "Bash(node -e:*)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "bypassPermissions"
+  }
+}
