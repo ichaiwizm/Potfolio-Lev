@@ -68,11 +68,17 @@ THÈMES DISPONIBLES (utilisez EXACTEMENT ces IDs):
 IMAGES DISPONIBLES:
 ⚠️ Les images sont accessibles via /images/{id}.jpg
 
-- "landscape-1" → Paysage montagneux
-- "abstract-1" → Art abstrait coloré
-- "city-1" → Ville moderne
-- "pattern-1" → Motif géométrique
-- "nature-1" → Forêt luxuriante
+**Photos personnelles et souvenirs** :
+- "paris-proposal" → Demande en mariage - Levana & Haïm à Paris (Tour Eiffel)
+- "nephew-yinone" → Avec Yinone, mon neveu
+- "ichai-wedding-djellaba" → Mariage d'Ichai - Tenue djellaba avec ma sœur Tsipora
+- "childhood-yonathan" → Souvenirs d'enfance avec Yonathan
+- "childhood-tata-johanna" → Avec Tata Johanna
+- "kimono-chez-nanou" → Kimono japonais chez Nanou (enfance)
+- "bat-mitzvah-speech" → Mon discours de Bat Mitzvah
+- "mountain-funicular" → Funiculaire à la montagne
+- "childhood-ichai-siblings" → Câlin avec mon frère Ichai (enfance)
+- "venice-mood" → À Venise
 
 ---
 

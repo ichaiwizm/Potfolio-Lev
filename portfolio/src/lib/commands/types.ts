@@ -26,9 +26,14 @@ export type ExecutorContext = {
 };
 
 export const AVAILABLE_IMAGES = [
-  { id: "landscape-1", name: "Paysage montagneux", category: "nature" },
-  { id: "abstract-1", name: "Art abstrait coloré", category: "abstract" },
-  { id: "city-1", name: "Ville moderne", category: "urban" },
-  { id: "pattern-1", name: "Motif géométrique", category: "pattern" },
-  { id: "nature-1", name: "Forêt luxuriante", category: "nature" },
+  { id: "paris-proposal", name: "Demande en mariage - Levana & Haïm à Paris", category: "personal" },
+  { id: "nephew-yinone", name: "Avec Yinone, mon neveu", category: "personal" },
+  { id: "ichai-wedding-djellaba", name: "Mariage d'Ichai - Tenue djellaba avec Tsipora", category: "personal" },
+  { id: "childhood-yonathan", name: "Souvenirs d'enfance avec Yonathan", category: "personal" },
+  { id: "childhood-tata-johanna", name: "Avec Tata Johanna", category: "personal" },
+  { id: "kimono-chez-nanou", name: "Kimono japonais chez Nanou", category: "personal" },
+  { id: "bat-mitzvah-speech", name: "Discours de Bat Mitzvah", category: "personal" },
+  { id: "mountain-funicular", name: "Funiculaire à la montagne", category: "personal" },
+  { id: "childhood-ichai-siblings", name: "Câlin avec Ichai", category: "personal" },
+  { id: "venice-mood", name: "À Venise", category: "personal" },
 ] as const;
