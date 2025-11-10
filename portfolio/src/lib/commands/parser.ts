@@ -17,7 +17,7 @@ export type ParseResult = {
 };
 
 export function validateWindowCommand(cmd: any): { valid: boolean; error?: string } {
-  if (!cmd || typeof cmd !== 'object') return { valid: false, error: "Fenêtre manquante (clé 'window'). Utilise display_image ou display_gallery pour les photos, ou fournis {title, contentHtml}." };
+  if (!cmd || typeof cmd !== 'object') return { valid: false, error: "Fenêtre manquante (clé 'window')." };
   if (!cmd.title || typeof cmd.title !== 'string') return { valid: false, error: 'Titre manquant' };
   if (!cmd.contentHtml || typeof cmd.contentHtml !== 'string') return { valid: false, error: 'HTML manquant' };
   if (cmd.contentHtml.length > MAX_HTML_SIZE) return { valid: false, error: `HTML trop large (max ${MAX_HTML_SIZE/1000}KB)` };
@@ -80,6 +80,29 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
     try {
       const parsed = JSON.parse(match[1]);
 
+      // Normalize create_window shape: allow top-level title/contentHtml
+      if (parsed && parsed.type === "create_window" && !parsed.window) {
+        const maybeTitle = (parsed as any).title;
+        const maybeHtml = (parsed as any).contentHtml;
+        const maybeWidth = (parsed as any).width;
+        const maybeHeight = (parsed as any).height;
+        const maybeKey = (parsed as any).key;
+        if (typeof maybeTitle === "string" && typeof maybeHtml === "string") {
+          (parsed as any).window = {
+            title: maybeTitle,
+            contentHtml: maybeHtml,
+            width: typeof maybeWidth === "number" ? maybeWidth : undefined,
+            height: typeof maybeHeight === "number" ? maybeHeight : undefined,
+            key: typeof maybeKey === "string" ? maybeKey : undefined,
+          };
+          delete (parsed as any).title;
+          delete (parsed as any).contentHtml;
+          delete (parsed as any).width;
+          delete (parsed as any).height;
+          delete (parsed as any).key;
+        }
+      }
+
       // Validate command structure
       const validation = validateCommand(parsed);
       if (!validation.valid) {
@@ -97,8 +120,9 @@ export function parseWindowCommands(content: string, currentWindowCount = 0): Pa
         }
         const windowValidation = validateWindowCommand(parsed.window);
         if (!windowValidation.valid) {
+          const hint = `Exemple: {\n  \"type\": \"create_window\",\n  \"window\": { \"title\": \"Titre\", \"contentHtml\": \"<div>...</div>\", \"width\": 520, \"height\": 380 }\n}`;
           errors.push(`Fenêtre ${index + 1}: ${windowValidation.error}`);
-          displayContent = displayContent.replace(match[0], `_❌ ${windowValidation.error}_`);
+          displayContent = displayContent.replace(match[0], `_❌ ${windowValidation.error}\n${hint}_`);
           return;
         }
       }
