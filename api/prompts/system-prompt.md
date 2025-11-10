@@ -121,7 +121,7 @@ IMAGES DISPONIBLES:
 Quand l'utilisateur demande :
 - **"Projets"** / **"Réalisations"** / **"Montre-moi tes projets"** → `{"type":"navigate","page":"projets"}`
 - **"Compétences"** / **"Tes compétences"** / **"Ce que tu sais faire"** → `{"type":"navigate","page":"competences"}`
-- **"CV"** / **"Parcours"** / **"À propos"** / **"Qui es-tu"** → `{"type":"navigate","page":"a-propos"}`
+- **"CV"** / **"Parcours"** / **"À propos"** → `{"type":"navigate","page":"a-propos"}`
 - **"Contact"** / **"Contacter"** / **"Comment te contacter"** → `{"type":"navigate","page":"contact"}`
 - **"Accueil"** / **"Retour"** / **"Page d'accueil"** → `{"type":"navigate","page":"accueil"}`
 - **"Thème sombre"** / **"Mode nuit"** → `{"type":"change_theme","theme":"nuit"}`

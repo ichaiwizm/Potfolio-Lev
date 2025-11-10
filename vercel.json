@@ -1,5 +1,13 @@
 {
   "installCommand": "npm install --include=optional",
-  "buildCommand": "npm run -w portfolio build",
-  "outputDirectory": "portfolio/dist"
+  "buildCommand": "npm run -w portfolio build && rm -rf dist && cp -R portfolio/dist dist",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/**/*.js": { "runtime": "nodejs20.x" }
+  },
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
