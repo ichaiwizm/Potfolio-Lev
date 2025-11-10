@@ -18,3 +18,7 @@ export function getDefaultTheme(): ThemeId {
   return "crepuscule-dore";
 }
 
+export function isValidThemeId(value: string): value is ThemeId {
+  return value in THEME_DEFINITIONS;
+}
+

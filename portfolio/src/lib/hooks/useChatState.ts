@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendChat, type ChatMessage } from "@/lib/api";
-import { parseWindowCommands } from "@/lib/windowParser";
+import { parseWindowCommands } from "@/lib/commands/parser";
 import { executeCommand } from "@/lib/commands/executor";
 import type { ExecutorContext } from "@/lib/commands/types";
 

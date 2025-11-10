@@ -1,5 +1,13 @@
-import type { Command } from "./commands/types";
-import { validateCommand } from "./commands/validator";
+import type { Command } from "./types";
+import { validateCommand } from "./validator";
+import {
+  MAX_HTML_SIZE,
+  MAX_WINDOWS,
+  MIN_WIDTH,
+  MAX_WIDTH,
+  MIN_HEIGHT,
+  MAX_HEIGHT
+} from "@/lib/constants/windows";
 
 export type ParseResult = {
   originalContent: string;
@@ -8,19 +16,16 @@ export type ParseResult = {
   errors: string[];
 };
 
-const MAX_HTML_SIZE = 50000; // 50KB
-const MAX_WINDOWS = 10;
-
 export function validateWindowCommand(cmd: any): { valid: boolean; error?: string } {
   if (!cmd || typeof cmd !== 'object') return { valid: false, error: 'Objet invalide' };
   if (!cmd.title || typeof cmd.title !== 'string') return { valid: false, error: 'Titre manquant' };
   if (!cmd.contentHtml || typeof cmd.contentHtml !== 'string') return { valid: false, error: 'HTML manquant' };
   if (cmd.contentHtml.length > MAX_HTML_SIZE) return { valid: false, error: `HTML trop large (max ${MAX_HTML_SIZE/1000}KB)` };
-  if (cmd.width !== undefined && (typeof cmd.width !== 'number' || cmd.width < 100 || cmd.width > 2000)) {
-    return { valid: false, error: 'Largeur invalide (100-2000px)' };
+  if (cmd.width !== undefined && (typeof cmd.width !== 'number' || cmd.width < MIN_WIDTH || cmd.width > MAX_WIDTH)) {
+    return { valid: false, error: `Largeur invalide (${MIN_WIDTH}-${MAX_WIDTH}px)` };
   }
-  if (cmd.height !== undefined && (typeof cmd.height !== 'number' || cmd.height < 100 || cmd.height > 1500)) {
-    return { valid: false, error: 'Hauteur invalide (100-1500px)' };
+  if (cmd.height !== undefined && (typeof cmd.height !== 'number' || cmd.height < MIN_HEIGHT || cmd.height > MAX_HEIGHT)) {
+    return { valid: false, error: `Hauteur invalide (${MIN_HEIGHT}-${MAX_HEIGHT}px)` };
   }
   return { valid: true };
 }

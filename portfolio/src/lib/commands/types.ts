@@ -21,16 +21,6 @@ export type ExecutorContext = {
   setChatExpanded: (expanded: boolean) => void;
 };
 
-export const VALID_THEME_IDS = [
-  "lumiere",
-  "nuit",
-  "foret-emeraude",
-  "ocean-profond",
-  "crepuscule-dore",
-  "lavande-zen",
-  "feu-dragon",
-] as const;
-
 export const AVAILABLE_IMAGES = [
   { id: "landscape-1", name: "Paysage montagneux", category: "nature" },
   { id: "abstract-1", name: "Art abstrait coloré", category: "abstract" },

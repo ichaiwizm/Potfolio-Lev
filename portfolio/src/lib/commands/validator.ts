@@ -1,4 +1,6 @@
-import { VALID_THEME_IDS, AVAILABLE_IMAGES } from "./types";
+import { AVAILABLE_IMAGES } from "./types";
+import { MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from "@/lib/constants/windows";
+import { isValidThemeId, ALL_THEME_IDS } from "@/theme/config/theme-registry";
 
 export function validateCommand(cmd: any): { valid: boolean; error?: string } {
   if (!cmd?.type) return { valid: false, error: "Commande invalide" };
@@ -8,10 +10,10 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     if (!cmd.theme || typeof cmd.theme !== "string") {
       return { valid: false, error: "Thème invalide" };
     }
-    if (!VALID_THEME_IDS.includes(cmd.theme)) {
+    if (!isValidThemeId(cmd.theme)) {
       return {
         valid: false,
-        error: `Thème inconnu: ${cmd.theme}. Thèmes valides: ${VALID_THEME_IDS.join(", ")}`
+        error: `Thème inconnu: ${cmd.theme}. Thèmes valides: ${ALL_THEME_IDS.join(", ")}`
       };
     }
   }
@@ -54,11 +56,11 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
     if (cmd.width === undefined && cmd.height === undefined) {
       return { valid: false, error: "Aucune dimension fournie" };
     }
-    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < 100 || cmd.width > 2000)) {
-      return { valid: false, error: "Largeur invalide (100-2000px)" };
+    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < MIN_WIDTH || cmd.width > MAX_WIDTH)) {
+      return { valid: false, error: `Largeur invalide (${MIN_WIDTH}-${MAX_WIDTH}px)` };
     }
-    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < 100 || cmd.height > 1500)) {
-      return { valid: false, error: "Hauteur invalide (100-1500px)" };
+    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < MIN_HEIGHT || cmd.height > MAX_HEIGHT)) {
+      return { valid: false, error: `Hauteur invalide (${MIN_HEIGHT}-${MAX_HEIGHT}px)` };
     }
   }
 
@@ -74,11 +76,11 @@ export function validateCommand(cmd: any): { valid: boolean; error?: string } {
       const validIds = AVAILABLE_IMAGES.map(img => img.id).join(", ");
       return { valid: false, error: `Image inconnue: ${cmd.imageId}. Images disponibles: ${validIds}` };
     }
-    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < 100 || cmd.width > 2000)) {
-      return { valid: false, error: "Largeur invalide (100-2000px)" };
+    if (cmd.width !== undefined && (typeof cmd.width !== "number" || cmd.width < MIN_WIDTH || cmd.width > MAX_WIDTH)) {
+      return { valid: false, error: `Largeur invalide (${MIN_WIDTH}-${MAX_WIDTH}px)` };
     }
-    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < 100 || cmd.height > 1500)) {
-      return { valid: false, error: "Hauteur invalide (100-1500px)" };
+    if (cmd.height !== undefined && (typeof cmd.height !== "number" || cmd.height < MIN_HEIGHT || cmd.height > MAX_HEIGHT)) {
+      return { valid: false, error: `Hauteur invalide (${MIN_HEIGHT}-${MAX_HEIGHT}px)` };
     }
   }
 

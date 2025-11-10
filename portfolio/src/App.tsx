@@ -9,7 +9,7 @@ import { useTheme } from "@/theme/provider/ThemeContext";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
 import { useChatState } from "@/lib/hooks/useChatState";
-import { VALID_THEME_IDS } from "@/lib/commands/types";
+import { isValidThemeId } from "@/theme/config/theme-registry";
 import type { ExecutorContext } from "@/lib/commands/types";
 
 function App() {
@@ -26,8 +26,8 @@ function App() {
     modifyWindow,
     resizeWindow,
     changeTheme: (theme: string) => {
-      if (VALID_THEME_IDS.includes(theme as any)) {
-        setThemeId(theme as any);
+      if (isValidThemeId(theme)) {
+        setThemeId(theme);
       } else {
         console.error(`Invalid theme ID: ${theme}`);
       }

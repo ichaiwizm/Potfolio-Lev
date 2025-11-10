@@ -1,8 +1,15 @@
 const express = require("express")
 const cors = require("cors")
+const fs = require("fs")
+const path = require("path")
 const fetch = global.fetch || require("node-fetch")
-const systemPrompt = require("./systemPrompt")
 require("dotenv").config()
+
+// Load system prompt from external file
+const systemPrompt = fs.readFileSync(
+  path.join(__dirname, "prompts", "system-prompt.md"),
+  "utf-8"
+)
 
 const app = express()
 const port = process.env.PORT || 3001

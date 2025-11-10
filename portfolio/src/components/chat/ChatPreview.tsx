@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { replaceWindowCommandsInText } from "@/lib/windowParser"
+import { replaceWindowCommandsInText } from "@/lib/commands/parser"
 
 type ChatMessage = { role: "user" | "assistant"; content: string }
 
