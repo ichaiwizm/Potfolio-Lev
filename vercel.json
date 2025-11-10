@@ -1,13 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install --include=optional",
-  "buildCommand": "npm run -w portfolio build && rm -rf dist && cp -R portfolio/dist dist",
+  "buildCommand": "if [ -f portfolio/package.json ]; then npm run -w portfolio build; else npm run build; fi; if [ -d portfolio/dist ]; then rm -rf dist && cp -R portfolio/dist dist; fi",
   "outputDirectory": "dist",
   "functions": {
     "api/**/*.js": { "runtime": "nodejs20.x" }
   },
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
