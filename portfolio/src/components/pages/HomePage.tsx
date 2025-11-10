@@ -3,7 +3,7 @@ import { PERSONAL_INFO } from "@/data/personal-info";
 export function HomePage() {
   return (
     <div className="h-[calc(100vh-4rem)] flex items-center justify-center px-8 overflow-hidden">
-      <div className="max-w-3xl mx-auto text-center space-y-6">
+      <div className="max-w-3xl mx-auto text-center space-y-6 -translate-y-6 md:-translate-y-12">
         <h1 className="text-monumental tracking-tight">
           {PERSONAL_INFO.fullName}
         </h1>
