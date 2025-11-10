@@ -1,75 +1,79 @@
 import { SKILLS, SKILL_CATEGORIES } from "@/data/skills";
-import { Lightbulb } from "lucide-react";
+import { useState } from "react";
 
 export function SkillsPage() {
-  // Grouper les compétences par catégorie
-  const skillsByCategory = SKILLS.reduce((acc, skill) => {
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+
+  // Group by category
+  const byCategory = SKILLS.reduce((acc, skill) => {
     if (!acc[skill.category]) acc[skill.category] = [];
     acc[skill.category].push(skill);
     return acc;
   }, {} as Record<string, typeof SKILLS>);
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen pt-32 pb-24 px-8">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Mes Compétences
-          </h1>
-          <p className="text-lg text-foreground/60" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Technologies et outils que je maîtrise
+        <div className="mb-20">
+          <h1 className="text-monumental tracking-tight">Compétences</h1>
+          <p className="text-body-large text-foreground/60 mt-6 max-w-2xl">
+            Technologies et outils que je maîtrise dans le développement web full-stack
           </p>
         </div>
 
         {/* Skills by Category */}
-        <div className="space-y-10">
-          {Object.entries(skillsByCategory).map(([category, skills]) => {
-            const { label, gradient } = SKILL_CATEGORIES[category as keyof typeof SKILL_CATEGORIES];
-            const avgLevel = Math.round(
-              skills.reduce((sum, s) => sum + s.level, 0) / skills.length
-            );
+        <div className="space-y-16">
+          {Object.entries(byCategory).map(([category, skills]) => {
+            const categoryInfo = SKILL_CATEGORIES[category as keyof typeof SKILL_CATEGORIES];
 
             return (
-              <div key={category} className="space-y-4">
+              <div key={category}>
                 {/* Category Header */}
-                <div className="flex items-center gap-3">
-                  <h2 className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    {label}
-                  </h2>
-                  <span className="text-sm text-foreground/50 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {avgLevel}% moyenne
-                  </span>
+                <div className="mb-8 pb-3 border-b border-foreground/10">
+                  <h2 className="text-title font-bold">{categoryInfo.label}</h2>
                 </div>
 
-                {/* Skills Grid */}
-                <div className="grid sm:grid-cols-2 gap-4">
+                {/* Skills Grid - More relaxed */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {skills.map((skill) => {
-                    const IconComponent = skill.icon;
+                    const isHovered = hoveredSkill === skill.name;
+
                     return (
                       <div
                         key={skill.name}
-                        className="bg-card border border-border rounded-lg p-4 hover:shadow-lg transition-all"
+                        className="group relative border border-foreground/10 rounded-lg p-6 transition-all duration-300 hover:border-foreground/30 hover:shadow-md cursor-pointer"
+                        onMouseEnter={() => setHoveredSkill(skill.name)}
+                        onMouseLeave={() => setHoveredSkill(null)}
                       >
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="font-semibold text-foreground flex items-center gap-2" style={{ fontFamily: "'Inter', sans-serif" }}>
-                            {IconComponent && <IconComponent className="w-5 h-5 text-purple-600" />}
-                            {skill.name}
-                          </span>
-                          <span className="text-sm font-bold text-purple-600" style={{ fontFamily: "'Inter', sans-serif" }}>
-                            {skill.level}%
-                          </span>
+                        {/* Skill Name */}
+                        <div className="text-body font-semibold text-foreground/90 mb-3">
+                          {skill.name}
                         </div>
 
-                        {/* Progress Bar */}
-                        <div className="h-3 bg-muted rounded-full overflow-hidden shadow-inner">
-                          <div
-                            className="h-full rounded-full transition-all duration-1000 ease-out"
-                            style={{
-                              background: gradient,
-                              width: `${skill.level}%`,
-                            }}
-                          />
+                        {/* Level Indicator - Subtle dots */}
+                        <div className="flex gap-1.5">
+                          {[...Array(5)].map((_, i) => (
+                            <div
+                              key={i}
+                              className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                                i < Math.ceil(skill.level / 20)
+                                  ? "bg-foreground/70"
+                                  : "bg-foreground/10"
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Hover Info */}
+                        <div
+                          className={`absolute inset-0 bg-foreground/5 backdrop-blur-sm rounded-lg flex items-center justify-center transition-opacity duration-200 ${
+                            isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
+                          }`}
+                        >
+                          <span className="text-tiny text-foreground/60 font-medium">
+                            {skill.level}% maîtrise
+                          </span>
                         </div>
                       </div>
                     );
@@ -80,14 +84,11 @@ export function SkillsPage() {
           })}
         </div>
 
-        {/* Footer Note */}
-        <div className="mt-12 p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl">
-          <div className="flex items-center justify-center gap-2 text-foreground/70">
-            <Lightbulb className="w-5 h-5 text-purple-600" />
-            <p style={{ fontFamily: "'Inter', sans-serif" }}>
-              Je suis toujours en apprentissage et j'adore découvrir de nouvelles technologies !
-            </p>
-          </div>
+        {/* Bottom Note */}
+        <div className="mt-20 text-center">
+          <p className="text-body text-foreground/50">
+            Toujours en apprentissage, toujours curieuse de nouvelles technologies
+          </p>
         </div>
       </div>
     </div>

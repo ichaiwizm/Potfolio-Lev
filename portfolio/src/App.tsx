@@ -5,6 +5,7 @@ import { PromptBar } from "@/components/chat/PromptBar";
 import { PromptSuggestions } from "@/components/chat/PromptSuggestions";
 import WindowManager from "@/components/windows/WindowManager";
 import { Toaster } from "sonner";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 import { useTheme } from "@/theme/provider/ThemeContext";
 import { useWindowManager } from "@/lib/hooks/useWindowManager";
 import { useAppBackground } from "@/lib/hooks/useAppBackground";
@@ -75,6 +76,7 @@ function App() {
 
   return (
     <>
+      <CustomCursor />
       <Header
         onReset={resetToDefault}
         currentPage={currentPage}

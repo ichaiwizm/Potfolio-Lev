@@ -1,178 +1,147 @@
 import { PERSONAL_INFO } from "@/data/personal-info";
 import { EXPERIENCES } from "@/data/experience";
-import { Globe, Briefcase, BookOpen, Github, Linkedin, CircleDot } from "lucide-react";
+
+const typeLabels = {
+  alternance: "Alternance",
+  emploi: "Emploi",
+  stage: "Stage",
+  benevole: "Bénévolat",
+};
 
 export function AboutPage() {
-  const currentExperiences = EXPERIENCES.filter((exp) => exp.current);
-  const pastExperiences = EXPERIENCES.filter((exp) => !exp.current);
+  const sortedExperiences = [...EXPERIENCES].sort((a, b) => {
+    const dateA = new Date(a.startDate).getTime();
+    const dateB = new Date(b.startDate).getTime();
+    return dateB - dateA;
+  });
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
+    <div className="min-h-screen pt-32 pb-24 px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            À propos de moi
-          </h1>
-          <p className="text-lg text-foreground/60" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Mon parcours et mes expériences
+        <div className="mb-20">
+          <h1 className="text-monumental tracking-tight mb-8">À propos</h1>
+          <p className="text-headline text-foreground/70 leading-snug max-w-2xl">
+            Développeuse passionnée qui transforme la curiosité en code
           </p>
         </div>
 
-        {/* Bio longue */}
-        <div className="mb-12 p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl">
-          <p className="text-lg text-foreground/80 leading-relaxed whitespace-pre-line" style={{ fontFamily: "'Inter', sans-serif" }}>
-            {PERSONAL_INFO.bio.long}
-          </p>
-        </div>
-
-        {/* Langues */}
-        <div className="mb-12">
-          <div className="flex items-center gap-2 mb-6">
-            <Globe className="w-7 h-7 text-purple-600" />
-            <h2 className="text-3xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Langues
-            </h2>
+        {/* Biography */}
+        <div className="mb-20 space-y-8">
+          <div className="border-l-2 border-foreground/20 pl-6">
+            <h2 className="text-small-caps text-foreground/50 mb-3">Mon parcours</h2>
+            <p className="text-body-large text-foreground/70 leading-relaxed">
+              Actuellement en alternance chez <strong>BCDemarches</strong> et étudiante en BTS SIO SLAM
+              à l'école <strong>ORT Montreuil</strong>. Je combine apprentissage théorique et expérience
+              pratique pour créer des applications web modernes et performantes.
+            </p>
           </div>
-          <div className="flex flex-wrap gap-4">
-            {PERSONAL_INFO.languages.map((lang) => (
-              <div
-                key={lang.name}
-                className="px-6 py-3 bg-card border border-border rounded-lg"
-              >
-                <span className="font-semibold text-foreground" style={{ fontFamily: "'Inter', sans-serif" }}>{lang.name}</span>
-                <span className="text-foreground/60 ml-2" style={{ fontFamily: "'Inter', sans-serif" }}>- {lang.level}</span>
-              </div>
-            ))}
+
+          <div className="border-l-2 border-foreground/20 pl-6">
+            <h2 className="text-small-caps text-foreground/50 mb-3">Ma philosophie</h2>
+            <p className="text-body-large text-foreground/70 leading-relaxed">
+              Mon parcours atypique — incluant une année de projet humanitaire et diverses
+              expériences — m'a appris la persévérance, l'adaptabilité et la valeur du travail
+              d'équipe. Des qualités que j'applique quotidiennement dans le développement.
+            </p>
           </div>
         </div>
 
-        {/* Expériences en cours */}
-        {currentExperiences.length > 0 && (
-          <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6">
-              <Briefcase className="w-7 h-7 text-purple-600" />
-              <h2 className="text-3xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Expériences actuelles
-              </h2>
-            </div>
-            <div className="space-y-6">
-              {currentExperiences.map((exp) => (
-                <div
-                  key={exp.id}
-                  className="p-6 bg-card border-l-4 border-purple-500 rounded-lg shadow-md"
-                >
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                        {exp.position}
-                      </h3>
-                      <p className="text-foreground/70 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>{exp.company}</p>
-                      <p className="text-sm text-foreground/50" style={{ fontFamily: "'Inter', sans-serif" }}>{exp.location}</p>
-                    </div>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-700 dark:text-green-400 text-sm font-semibold rounded-full flex items-center gap-1">
-                      <CircleDot className="w-3 h-3" />
-                      En cours
-                    </span>
-                  </div>
-                  <p className="text-foreground/70 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>{exp.description}</p>
-                  {exp.responsibilities && (
-                    <ul className="space-y-1">
-                      {exp.responsibilities.map((resp, idx) => (
-                        <li key={idx} className="text-sm text-foreground/60 flex items-start" style={{ fontFamily: "'Inter', sans-serif" }}>
-                          <span className="text-purple-500 mr-2">•</span>
-                          {resp}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {exp.technologies && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 py-1 bg-purple-500/20 text-purple-700 dark:text-purple-300 text-xs rounded"
-                          style={{ fontFamily: "'Inter', sans-serif" }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Expériences passées */}
-        <div>
-          <div className="flex items-center gap-2 mb-6">
-            <BookOpen className="w-7 h-7 text-purple-600" />
-            <h2 className="text-3xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              Expériences passées
-            </h2>
-          </div>
-          <div className="space-y-6">
-            {pastExperiences.map((exp) => (
+        {/* Experiences */}
+        <div className="mb-20">
+          <h2 className="text-title font-bold mb-8 pb-3 border-b border-foreground/10">
+            Expériences professionnelles
+          </h2>
+          <div className="space-y-8">
+            {sortedExperiences.map((exp) => (
               <div
                 key={exp.id}
-                className="p-6 bg-card border border-border rounded-lg hover:shadow-md transition-shadow"
+                className="border border-foreground/10 rounded-lg p-6 hover:border-foreground/20 transition-colors"
               >
-                <div className="flex justify-between items-start mb-3">
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
-                    <h3 className="text-xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                    <h3 className="text-body-large font-bold text-foreground mb-1">
                       {exp.position}
                     </h3>
-                    <p className="text-foreground/70 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>{exp.company}</p>
-                    <p className="text-sm text-foreground/50" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      {exp.location} • {exp.startDate} - {exp.endDate}
-                    </p>
+                    <div className="text-body text-foreground/60">
+                      {exp.company} • {exp.location}
+                    </div>
                   </div>
-                  <span className="px-3 py-1 bg-muted text-foreground/60 text-xs font-medium rounded-full" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {exp.type}
+                  {exp.current && (
+                    <span className="text-tiny bg-foreground/5 px-3 py-1 rounded-full shrink-0">
+                      En cours
+                    </span>
+                  )}
+                </div>
+
+                {/* Meta */}
+                <div className="flex items-center gap-3 text-tiny text-foreground/50 mb-3">
+                  <span>{typeLabels[exp.type]}</span>
+                  <span>•</span>
+                  <span>
+                    {exp.startDate} — {exp.current ? "Présent" : exp.endDate}
                   </span>
                 </div>
-                <p className="text-foreground/70 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>{exp.description}</p>
-                {exp.responsibilities && (
-                  <ul className="space-y-1">
-                    {exp.responsibilities.slice(0, 3).map((resp, idx) => (
-                      <li key={idx} className="text-sm text-foreground/60 flex items-start" style={{ fontFamily: "'Inter', sans-serif" }}>
-                        <span className="text-purple-500 mr-2">•</span>
-                        {resp}
-                      </li>
+
+                {/* Description */}
+                <p className="text-body text-foreground/70 leading-relaxed mb-4">
+                  {exp.description}
+                </p>
+
+                {/* Technologies */}
+                {exp.technologies && (
+                  <div className="flex flex-wrap gap-2">
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-tiny border border-foreground/20 px-3 py-1 rounded-full"
+                      >
+                        {tech}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Social Links */}
-        <div className="mt-12 p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl text-center">
-          <h3 className="text-xl font-bold mb-4 text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            Retrouvez-moi en ligne
-          </h3>
-          <div className="flex justify-center gap-4">
-            <a
-              href={PERSONAL_INFO.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-card border border-border rounded-lg hover:shadow-lg transition-all hover:-translate-y-1 flex items-center gap-2"
-            >
-              <Github className="w-5 h-5" />
-              <span style={{ fontFamily: "'Inter', sans-serif" }}>GitHub</span>
-            </a>
-            <a
-              href={PERSONAL_INFO.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-card border border-border rounded-lg hover:shadow-lg transition-all hover:-translate-y-1 flex items-center gap-2"
-            >
-              <Linkedin className="w-5 h-5" />
-              <span style={{ fontFamily: "'Inter', sans-serif" }}>LinkedIn</span>
-            </a>
+        {/* Footer Grid */}
+        <div className="grid md:grid-cols-2 gap-12 border-t border-foreground/10 pt-12">
+          {/* Languages */}
+          <div>
+            <h3 className="text-small-caps text-foreground/50 mb-4">Langues</h3>
+            <div className="space-y-2">
+              {PERSONAL_INFO.languages.map((lang) => (
+                <div key={lang.name} className="text-body text-foreground/70">
+                  <strong>{lang.name}</strong> • {lang.level}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h3 className="text-small-caps text-foreground/50 mb-4">Retrouvez-moi</h3>
+            <div className="space-y-2">
+              <a
+                href={PERSONAL_INFO.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-body text-foreground/70 hover:text-foreground transition-colors"
+              >
+                GitHub →
+              </a>
+              <a
+                href={PERSONAL_INFO.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-body text-foreground/70 hover:text-foreground transition-colors"
+              >
+                LinkedIn →
+              </a>
+            </div>
           </div>
         </div>
       </div>
